@@ -1,0 +1,31 @@
+[package]
+name = "test"
+version = "0.1.0"
+authors = ["nghuyenthevinh2000 <nghuyenthevinh@gmail.com>"]
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+# for more explicit tests, cargo test --features=backtraces
+backtraces = ["cosmwasm-std/backtraces"]
+# use library feature to disable all instantiate/execute/query exports
+library = []
+
+[dependencies]
+cosmwasm-schema = "1.1.3"
+cosmwasm-std = "1.1.3"
+cosmwasm-storage = "1.1.3"
+cw-storage-plus = "1.0.1"
+cw2 = "1.0.1"
+schemars = "0.8.10"
+derivative = "2"
+anyhow = "1"
+serde = { version = "1.0.145", default-features = false, features = ["derive"] }
+thiserror = { version = "1.0.31" }
+classic-test-tube = { version = "0.1.0", git = "https://github.com/classic-terra/classic-rust.git", package = "classic-test-tube", rev = "248fd78b094ed238e263cd6eba3384a1593fcbae" }
+u64key-migrate = { version = "0.3.0", path="../contracts/u64key-migrate" }
+
+[dev-dependencies]
+cw-multi-test = "0.16.2"

@@ -1,6 +1,7 @@
 [workspace]
 members = [
-    "contracts/u64key-migrate"
+    "contracts/u64key-migrate",
+    "test"
 ]
 
 [profile.release]
