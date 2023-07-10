@@ -1,3 +1,5 @@
+use std::str::FromStr;
+
 #[cfg(not(feature = "library"))]
 use cosmwasm_std::entry_point;
 use cosmwasm_std::{to_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdResult, Uint128, Uint64};
@@ -5,7 +7,7 @@ use cw2::{set_contract_version, get_contract_version};
 use cw_storage_plus::U64Key;
 
 use crate::error::ContractError;
-use crate::msg::{CountResponse, ExecuteMsg, InstantiateMsg, QueryMsg, MigrateMsg};
+use crate::msg::{CountResponse, ExecuteMsg, InstantiateMsg, QueryMsg, MigrateMsg, HelloResponse};
 use crate::state::{TEST_STORAGE};
 
 // version info for migration info
@@ -53,12 +55,17 @@ pub fn try_increment(deps: DepsMut, slot: Uint64) -> Result<Response, ContractEr
 pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
         QueryMsg::GetCount { slot } => to_binary(&query_count(deps, slot)?),
+        QueryMsg::Hello {  } => to_binary(&hello()?),
     }
 }
 
 fn query_count(deps: Deps, slot: Uint64) -> StdResult<CountResponse> {
     let count = TEST_STORAGE.load(deps.storage, slot.u64())?;
     Ok(CountResponse { count: count })
+}
+
+fn hello() -> StdResult<HelloResponse> {
+    Ok(HelloResponse { prompt: String::from_str("hello world").unwrap() })
 }
 
 #[cfg_attr(not(feature = "library"), entry_point)]

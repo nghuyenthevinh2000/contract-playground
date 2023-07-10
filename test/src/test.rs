@@ -2,7 +2,7 @@ use classic_test_tube::{TerraTestApp, Wasm, SigningAccount, Module, Account};
 use cosmwasm_std::{Coin, Uint128, Uint64};
 use derivative::Derivative;
 use anyhow::{Result};
-use u64key_migrate::msg::{InstantiateMsg, CountResponse, QueryMsg, MigrateMsg, ExecuteMsg};
+use u64key_migrate::msg::{InstantiateMsg, CountResponse, QueryMsg, MigrateMsg, ExecuteMsg, HelloResponse};
 
 fn contract_old_u64key_migrate() -> Vec<u8> {
     std::fs::read("../artifacts/old_u64key_migrate.wasm").unwrap()
@@ -84,6 +84,15 @@ fn migrate_test() {
         suite.new_contract_id, 
         &suite.owner
     ).unwrap();
+
+    // Hello after migration
+    let hello = suite.wasm.query::<_, HelloResponse>(
+        &contract_address, 
+        &QueryMsg::Hello {  }
+    ).unwrap();
+
+    println!("hello = {}", hello.prompt);
+    assert_eq!(hello.prompt, "hello world");
 
     // Query after migration
     let after_res = suite.wasm.query::<_, CountResponse>(

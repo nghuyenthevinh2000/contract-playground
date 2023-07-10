@@ -1,1 +1,1 @@
-5940bbc1227bc7a40bca63c63903c921e03f49fc837077d3f1c721dfe55c3aa1  target/wasm32-unknown-unknown/release/u64key_migrate.wasm
+2c878294456c149866ca2883799e9d23e81bfcd7f8cb32a49f11408a1e76ae12  target/wasm32-unknown-unknown/release/u64key_migrate.wasm
